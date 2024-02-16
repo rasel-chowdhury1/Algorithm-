@@ -1,0 +1,51 @@
+//Pseudocode: Bellman-Ford
+
+Input -> A weighted graph & a source node (with no negative cycles)
+Output -> Shortest distance from source node to all other nodes
+
+
+Time complexity: O(n * m) // n = nodes, m = edges
+Space complexity: O(n)
+
+/*
+Node relaxation:
+
+u ---> v
+
+d[u] + c(u,v) < d[v]
+=> d[v] = d[u] + c(u,v)
+
+*/
+
+- create a distance array "d" with all values to infinity
+- create a parent array "parent"
+
+- last_updated_node = -1
+- negative_cycle = false
+
+- for i = 1 to n:
+    - for all edge e(u, v, w):
+        - if d[u] + w < d[v]:
+            - d[v] = d[u] + w
+            - parent[v] = u
+               - if i == n:
+                    - negative_cycle = true
+                    - last_updated_node = v
+
+- if negative_cycle == true:
+    - print YES
+    - selected_node = last_updated_node
+    - for i = 1 to n - 1:
+        - selected_node = parent[selected_node]
+    
+    - first_node = selected_node
+    - create a "cycle" array
+    - while true:
+        - selected_node = parent[selected_node]
+        - cycle.push_back(selected_node)
+        - if selected_node == first_node:
+            - break
+        - reverse the "cycle" array
+        - print the "cycle" array
+- else:
+    - 
